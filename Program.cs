@@ -20,65 +20,81 @@ namespace Orto
                     string choiceA = Console.ReadLine();
                     if (choiceA == "nowe")
                     {
-                        Console.WriteLine("Wprowadź nowe słowo:");
-                        string slowoNext = Console.ReadLine();
-                        var bazaSlow = db.BazaSlow;
-                        bazaSlow.Add
-                        (new Przyklady
+                        bool noweStart = true;
+                        while (noweStart == true)
                         {
-                            przykladSample = slowoNext
+                            Console.WriteLine("Wprowadź nowe słowo:");
+                            string slowoNext = Console.ReadLine();
+                            var bazaSlow = db.BazaSlow;
+                            bazaSlow.Add
+                            (new Przyklady
+                            {
+                                przykladSample = slowoNext
+                            }
+
+                            );
+                            db.SaveChanges();
+                            Console.WriteLine("Wprowadzasz dalej t/n?");
+                            string decyzjaEdit=Console.ReadLine();
+                            if (decyzjaEdit=="n")
+                            {
+                                noweStart=false;
+
+                            }
                         }
-
-                        );
-                        db.SaveChanges();
-
                     }
 
                     if (choiceA == "lista")
                     {
                         var slowniczek = db.BazaSlow.ToList();
                         Colorgreen();
+                        Console.WriteLine("----------------------");
                         foreach (var n in slowniczek)
                         {
-                            Console.WriteLine("----------------------");
+
                             Console.WriteLine($"|{n.przykladyId,-4}|{n.przykladSample,15}|");
-                            Console.WriteLine("----------------------");
+
                         }
+                        Console.WriteLine("----------------------");
                         Colorgrey();
                     }
 
-                    if (choiceA=="change")
+                    if (choiceA == "change")
                     {
-                        var slowniczek =db.BazaSlow.ToList();
+                        var slowniczek = db.BazaSlow.ToList();
                         Colorgreen();
-                         foreach (var n in slowniczek)
+                        Console.WriteLine("----------------------");
+                        foreach (var n in slowniczek)
                         {
-                            
-                            Console.WriteLine("----------------------");
+
+
                             Console.WriteLine($"|{n.przykladyId,-4}|{n.przykladSample,15}|");
-                            Console.WriteLine("----------------------");
+
                         }
+                        Console.WriteLine("----------------------");
                         Colorgrey();
                         Console.WriteLine("Wprowadź numer Id słowa które chcesz zmienić/poprawić.");
                         string changeId = Console.ReadLine();
                         int changeIdInt = Convert.ToInt32(changeId);
-                        var singleSlownik=db.BazaSlow
-                        .Single(b=>b.przykladyId==changeIdInt);
-                        Console.WriteLine("=======================================");
-                        Console.WriteLine($"Wybrałeś {singleSlownik.przykladSample}");
-                        Console.WriteLine("=======================================");
+                        var singleSlownik = db.BazaSlow
+                        .Single(b => b.przykladyId == changeIdInt);
+                        Colorred();
+                        Console.WriteLine("==========================");
+                        Console.WriteLine($"Wybrałeś słowo: {singleSlownik.przykladSample}");
+                        Console.WriteLine("==========================");
+                        Colorgrey();
                         Console.WriteLine("Wprowadź poprawione słowo:");
                         string ChangedWordPol = Console.ReadLine();
-                        singleSlownik.przykladSample=ChangedWordPol;
+                        singleSlownik.przykladSample = ChangedWordPol;
                         db.SaveChanges();
 
 
                     }
 
                     if (choiceA == "test")
-                    {   
+                    {
                         Console.WriteLine("Podaj ilość przykładów");
-                        string examples=Console.ReadLine();
+                        string examples = Console.ReadLine();
                         int examplesInt = Convert.ToInt32(examples);
                         for (int n = 1; n <= examplesInt; n++)
                         {
@@ -91,15 +107,15 @@ namespace Orto
 
                             string zdanie = singleTest.przykladSample;
 
-                            if (zdanie.Contains("ó") || zdanie.Contains("u") || zdanie.Contains("ż") || zdanie.Contains("rz") )
+                            if (zdanie.Contains("ó") || zdanie.Contains("u") || zdanie.Contains("ż") || zdanie.Contains("rz"))
                             {
                                 string zdanieNew = zdanie.Replace("ó", "_");
-                                string zdanieNewB= zdanieNew.Replace("u","_");
-                                string zdanieNewC= zdanieNewB.Replace("ż","_");
-                                string zdanieNewD= zdanieNewC.Replace("rz","_");
+                                string zdanieNewB = zdanieNew.Replace("u", "_");
+                                string zdanieNewC = zdanieNewB.Replace("ż", "_");
+                                string zdanieNewD = zdanieNewC.Replace("rz", "_");
                                 Console.WriteLine(zdanieNewD);
                             }
-                            else 
+                            else
                             {
                                 Console.WriteLine(zdanie);
                             }
