@@ -93,9 +93,12 @@ namespace Orto
 
                     if (choiceA == "test")
                     {
+                        int DobrzeA = 0;
+                        
                         Console.WriteLine("Podaj ilość przykładów");
                         string examples = Console.ReadLine();
                         int examplesInt = Convert.ToInt32(examples);
+                        
                         for (int n = 1; n <= examplesInt; n++)
                         {
                             var testA = db.BazaSlow.ToList();
@@ -124,8 +127,9 @@ namespace Orto
                             if (zdaniePopr.Equals(zdanie) == true)
                             {
                                 Colorgreen();
-                                Console.WriteLine("dobrze");
+                                Console.WriteLine("Dobrze");
                                 Colorgrey();
+                                DobrzeA++;
                             }
                             else
                             {
@@ -133,7 +137,11 @@ namespace Orto
                                 Console.WriteLine("Źle");
                                 Colorgrey();
                             }
+
                         }
+                        Console.WriteLine("======================================================");
+                        Console.WriteLine($"Zrobiłeś dobrze{DobrzeA} na {examplesInt} przykładów.");
+                        Console.WriteLine("======================================================");
                     }
 
                     if (choiceA == "end")
